@@ -3,7 +3,7 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.VITE_FIREBASE_API,
+  apiKey: ,
   authDomain: "muso-ninjas-4a5cb.firebaseapp.com",
   projectId: "muso-ninjas-4a5cb",
   storageBucket: "muso-ninjas-4a5cb.firebasestorage.app",
