@@ -3,12 +3,12 @@ import "firebase/compat/firestore";
 import "firebase/compat/auth";
 
 const firebaseConfig = {
-  apiKey: ,
-  authDomain: "muso-ninjas-4a5cb.firebaseapp.com",
-  projectId: "muso-ninjas-4a5cb",
-  storageBucket: "muso-ninjas-4a5cb.firebasestorage.app",
-  messagingSenderId: "204985533986",
-  appId: "1:204985533986:web:a13b33d748f182a1492c7b",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.VITE_FIREBASE_SENDER_ID,
+  appId: import.meta.VITE_FIREBASE_APP_ID,
 };
 
 //init firebase
