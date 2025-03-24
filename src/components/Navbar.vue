@@ -1,5 +1,17 @@
 <script setup>
 import { RouterLink } from "vue-router";
+import useLogout from "@/composables/useLogout";
+import { useRouter } from "vue-router";
+
+const { logout } = useLogout();
+const router = useRouter();
+
+const handleSubmit = async () => {
+  await logout();
+
+  console.log("succesfully logged out");
+  router.push({ name: "login" });
+};
 </script>
 
 <template>
@@ -7,7 +19,7 @@ import { RouterLink } from "vue-router";
     <nav>
       <h1><RouterLink :to="{ name: 'home' }">Muso Ninjas</RouterLink></h1>
       <div class="links">
-        <button>Logout</button>
+        <button @click="handleSubmit">Logout</button>
         <RouterLink class="btn" :to="{ name: 'signup' }">Signup</RouterLink>
         <RouterLink class="btn" :to="{ name: 'login' }">Login</RouterLink>
       </div>

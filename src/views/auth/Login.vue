@@ -8,7 +8,7 @@ const email = ref("");
 const password = ref("");
 
 const handleSubmit = async () => {
-  const res = await login(email.value, password.value);
+  await login(email.value, password.value);
 
   if (!error.value) {
     console.log("user logged in");
