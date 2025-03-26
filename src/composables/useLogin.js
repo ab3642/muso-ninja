@@ -5,8 +5,8 @@ const error = ref(null);
 const isPending = ref(false);
 
 const login = async (email, password) => {
-  error.value = null;
   isPending.value = true;
+  error.value = null;
 
   try {
     const res = await projectAuth.signInWithEmailAndPassword(email, password);
@@ -14,7 +14,8 @@ const login = async (email, password) => {
     isPending = false;
     return res;
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
+
     isPending.value = false;
   }
 };

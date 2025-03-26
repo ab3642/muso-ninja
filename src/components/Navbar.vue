@@ -1,10 +1,15 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import useLogout from "@/composables/useLogout";
+import getUser from "@/composables/getUser";
 import { useRouter } from "vue-router";
+
+const { user } = getUser();
 
 const { logout } = useLogout();
 const router = useRouter();
+
+console.log(user.value);
 
 const handleSubmit = async () => {
   await logout();
@@ -19,9 +24,13 @@ const handleSubmit = async () => {
     <nav>
       <h1><RouterLink :to="{ name: 'home' }">Muso Ninjas</RouterLink></h1>
       <div class="links">
-        <button @click="handleSubmit">Logout</button>
-        <RouterLink class="btn" :to="{ name: 'signup' }">Signup</RouterLink>
-        <RouterLink class="btn" :to="{ name: 'login' }">Login</RouterLink>
+        <div v-if="user">
+          <button @click="handleSubmit">Logout</button>
+        </div>
+        <div v-if="!user">
+          <RouterLink class="btn" :to="{ name: 'signup' }">Signup</RouterLink>
+          <RouterLink class="btn" :to="{ name: 'login' }">Login</RouterLink>
+        </div>
       </div>
     </nav>
   </div>
