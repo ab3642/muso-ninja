@@ -9,8 +9,6 @@ const { user } = getUser();
 const { logout } = useLogout();
 const router = useRouter();
 
-console.log(user.value);
-
 const handleSubmit = async () => {
   await logout();
 
@@ -25,6 +23,9 @@ const handleSubmit = async () => {
       <h1><RouterLink :to="{ name: 'home' }">Muso Ninjas</RouterLink></h1>
       <div class="links">
         <div v-if="user">
+          <RouterLink class="btn" :to="{ name: 'createplaylist' }"
+            >Create Playlist</RouterLink
+          >
           <button @click="handleSubmit">Logout</button>
         </div>
         <div v-if="!user">
