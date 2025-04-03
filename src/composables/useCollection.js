@@ -12,9 +12,13 @@ const useCollection = (playlist) => {
     isPending.value = true;
 
     try {
-      await addDoc(collection(projectFirestore, "playlist"), document);
+      const res = await addDoc(
+        collection(projectFirestore, "playlist"),
+        document
+      );
 
       isPending.value = false;
+      return res;
     } catch (err) {
       console.log(err.message);
       error.value = "could not send the message";

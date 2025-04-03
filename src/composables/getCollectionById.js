@@ -1,18 +1,29 @@
 import { projectFirestore } from "@/firebase/config";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
+import { watchEffect, ref } from "vue";
 
-const getCollectionById = async (type, id) => {
-  const docRef = doc(projectFirestore, type, id);
-  const docSnap = await getDoc(docRef);
+const getCollectionById = (type, id) => {
+  const result = ref(null);
+  const error = ref(null);
 
-  let result;
+  const unsub = onSnapshot(
+    doc(projectFirestore, type, id),
+    (doc) => {
+      if (doc.data()) {
+        result.value = { ...doc.data(), id: doc.id };
+      }
+    },
+    (err) => {
+      console.log(err.message);
+      error.value = "problem fetching the document";
+    }
+  );
 
-  if (docSnap.exists()) {
-    result = docSnap.data();
-  } else {
-    console.log("No such document");
-  }
-  return result;
+  watchEffect((onInvalidate) => {
+    onInvalidate(() => unsub());
+  });
+
+  return { result, error };
 };
 
 export default getCollectionById;

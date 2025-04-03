@@ -6,13 +6,14 @@ const playlist = ref(null);
 
 const props = defineProps(["id"]);
 
-onMounted(async () => {
-  playlist.value = await getCollectionById("playlist", props.id);
-});
+const { result, error } = getCollectionById("playlist", props.id);
 </script>
 
 <template>
-  <h2>Playlist Details. ID - {{ playlist.title }}</h2>
+  <div v-if="!result">Loading...</div>
+  <div v-if="result">
+    <h2>Playlist Details. ID -{{ result.title }}</h2>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>
