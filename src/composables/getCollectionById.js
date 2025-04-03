@@ -3,14 +3,14 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { watchEffect, ref } from "vue";
 
 const getCollectionById = (type, id) => {
-  const result = ref(null);
+  const playlist = ref(null);
   const error = ref(null);
 
   const unsub = onSnapshot(
     doc(projectFirestore, type, id),
     (doc) => {
       if (doc.data()) {
-        result.value = { ...doc.data(), id: doc.id };
+        playlist.value = { ...doc.data(), id: doc.id };
       }
     },
     (err) => {
@@ -23,7 +23,7 @@ const getCollectionById = (type, id) => {
     onInvalidate(() => unsub());
   });
 
-  return { result, error };
+  return { playlist, error };
 };
 
 export default getCollectionById;
