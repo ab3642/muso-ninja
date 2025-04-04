@@ -1,12 +1,16 @@
 <script setup>
 import getCollectionById from "@/composables/getCollectionById";
+import { useRouter } from "vue-router";
+import useDocuments from "@/composables/useDocument";
 import getUser from "@/composables/getUser";
 import { computed, defineProps } from "vue";
 
 const props = defineProps(["id"]);
 const { user } = getUser();
+const router = useRouter();
 
-const { playlist, error } = getCollectionById("playlist", props.id);
+const { playlist } = getCollectionById("playlist", props.id);
+const { error, deletePlaylist } = useDocuments();
 
 const ownership = computed(() => {
   return (
@@ -14,7 +18,13 @@ const ownership = computed(() => {
   );
 });
 
-console.log(ownership.value);
+const handleDelete = async () => {
+  await deletePlaylist("playlist", props.id);
+
+  if (!error.value) {
+    router.push({ name: "home" });
+  }
+};
 </script>
 
 <template>
@@ -28,7 +38,7 @@ console.log(ownership.value);
       <h2>{{ playlist.title }}</h2>
       <p class="username">Created by {{ playlist.userName }}</p>
       <p class="description">{{ playlist.description }}</p>
-      <button v-if="ownership">Delete Playlist</button>
+      <button v-if="ownership" @click="handleDelete">Delete Playlist</button>
     </div>
     <!-- song list -->
     <div class="song-list">
