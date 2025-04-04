@@ -2,6 +2,7 @@
 import getCollectionById from "@/composables/getCollectionById";
 import { useRouter } from "vue-router";
 import useDocuments from "@/composables/useDocument";
+import useStorage from "@/composables/useStorage";
 import getUser from "@/composables/getUser";
 import { computed, defineProps } from "vue";
 
@@ -11,6 +12,7 @@ const router = useRouter();
 
 const { playlist } = getCollectionById("playlist", props.id);
 const { error, deletePlaylist } = useDocuments();
+const { deleteImage } = useStorage();
 
 const ownership = computed(() => {
   return (
@@ -19,6 +21,7 @@ const ownership = computed(() => {
 });
 
 const handleDelete = async () => {
+  await deleteImage(playlist.value.filePath);
   await deletePlaylist("playlist", props.id);
 
   if (!error.value) {

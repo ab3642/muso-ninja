@@ -4,6 +4,7 @@ import {
   getDownloadURL,
   ref as reference,
   uploadBytes,
+  deleteObject,
 } from "firebase/storage";
 import getUser from "./getUser";
 
@@ -29,7 +30,18 @@ const useStorage = () => {
     }
   };
 
-  return { url, filePath, error, uploadImage };
+  const deleteImage = async (path) => {
+    const storageRef = reference(projectStorage, path);
+
+    try {
+      await deleteObject(storageRef);
+    } catch (err) {
+      console.log(err.message);
+      error.value = err.message;
+    }
+  };
+
+  return { url, filePath, error, uploadImage, deleteImage };
 };
 
 export default useStorage;
